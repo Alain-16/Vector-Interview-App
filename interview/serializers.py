@@ -23,8 +23,10 @@ class InterviewTemplateSerializer(serializers.ModelSerializer):
         read_only_fields =['creator','organization']
     
     def create(self, validated_data):
+        user = self.context['request'].user
         questions_data = validated_data.pop('questions')
-        template = InterviewTemplate.objects.create(**validated_data)
+        template = InterviewTemplate.objects.create(
+            **validated_data)
         for question_data in questions_data:
             InterviewQuestion.objects.create(template=template, **question_data)
         return template

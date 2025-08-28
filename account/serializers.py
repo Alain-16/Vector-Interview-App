@@ -30,17 +30,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        field = ['email','name','password','role','organization_name']
+        fields = ['email','name','password','role','organization_name']
 
     def create(self,validated_data):
         organization_name = validated_data.pop('organization_name')
-        organization_name = organization.objects.get_or_create(name=organization_name)
+        organization_name, created = organization.objects.get_or_create(name=organization_name)
 
         user = User.objects.create_user(
             email=validated_data['email'],
             name = validated_data['name'],
             password=validated_data['password'],
             role=validated_data['role'],
-            organization=organization
+            organization=organization_name
         )
         return user

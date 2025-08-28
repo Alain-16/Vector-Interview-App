@@ -45,7 +45,7 @@ class InterviewResponse(models.Model):
     A candidate's response to a single interview question
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    session = models.ForeignKey(InterviewSession, on_delete=models.CASCADE, related_name='responsesSession')
+    session = models.ForeignKey(InterviewSession, on_delete=models.CASCADE, related_name='responses')
     question = models.ForeignKey('interview.InterviewQuestion', on_delete=models.CASCADE, related_name='responses')
     video_url = models.URLField(max_length=512, blank=True,null=True)
     text_response = models.TextField(blank=True,null=True)
